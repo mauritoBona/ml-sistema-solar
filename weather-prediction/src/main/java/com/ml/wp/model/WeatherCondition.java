@@ -1,5 +1,7 @@
 package com.ml.wp.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "WEATHER_CONDITION_DATE")
-public class WeatherCondition {
+public class WeatherCondition implements Serializable{
+	
+	private static final long serialVersionUID = 7877816799580649234L;
+	
+	public static final String PERIOD_OF_DROUGHT = "PERIODO DE SEQUIAS";
+	public static final String PERIOD_OF_RAIN = "PERIODO DE LLUVIAS";
+	public static final String PERIOD_OF_OPTIMAL_CONDITIONS= "PERIODO DE CONDICIONES OPTIMAS DE PRESION Y TEMPERATURA";
+	public static final String PERIOD_OF_NORMAL_CONDITIONS= "PERIODO DE CONDICIONES NORMALES";
 	
 	@Id
 	@Column(name="DAY_NUMBER")
@@ -18,6 +27,11 @@ public class WeatherCondition {
 
 	public WeatherCondition() {
 		super();
+	}
+	
+	public WeatherCondition(String description) {
+		super();
+		this.description = description;
 	}
 	
 	public WeatherCondition(Long day, String description) {
@@ -43,9 +57,9 @@ public class WeatherCondition {
 	}
 	
 	public static String getWeatherConditionDesc(WeatherPredictionResult prediction) {
-		if (prediction.getPeriodsOfDrought()>=1) return "Periodo de sequias"; 
-		if (prediction.getPeriodsOfRain()>=1) return "Periodo de lluvias";
-		if (prediction.getPeriodsOfOptimalConditions() >= 1) return "Periodo de condiciones optimas de presion y temperatura";
-		return "Condiciones Normales";
+		if (prediction.getPeriodsOfDrought()>=1) return PERIOD_OF_DROUGHT; 
+		if (prediction.getPeriodsOfRain()>=1) return PERIOD_OF_RAIN;
+		if (prediction.getPeriodsOfOptimalConditions() >= 1) return PERIOD_OF_OPTIMAL_CONDITIONS;
+		return PERIOD_OF_NORMAL_CONDITIONS;
 	}
 }

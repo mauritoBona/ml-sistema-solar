@@ -1,5 +1,7 @@
 package com.ml.wp.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,15 +9,15 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ml.wp.model.Galaxy;
+import com.ml.wp.model.SolarSystem;
 import com.ml.wp.model.WeatherCondition;
 import com.ml.wp.model.WeatherPredictionResult;
-import com.ml.wp.repositorys.WeatherConditionRepository;
+import com.ml.wp.repositories.WeatherConditionRepository;
 
 @Service
-public class GalaxyServiceImpl implements GalaxyService{
+public class SolarSystemServiceImpl implements SolarSystemService{
 
-	private static final Logger LOGGER = Logger.getLogger(GalaxyServiceImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SolarSystemServiceImpl.class.getName());
 	
 	private static final int TEN_YEARS_DAYS = 3650;
 	private static final int REPEAT_PATTERN = 360;
@@ -27,20 +29,16 @@ public class GalaxyServiceImpl implements GalaxyService{
 	private WeatherConditionRepository weatherConditionRepository;
 	
 	@Override
-	public WeatherPredictionResult predictWeatherConditionsInYearsAndSave(Galaxy galaxy, Integer years, boolean save) {
+	public WeatherPredictionResult simulateWeatherConditionsInYears(SolarSystem solarSystem, Integer years) {
 		WeatherPredictionResult result = new WeatherPredictionResult();
 		Integer days = years * 365;
 		try {
 			for(int i = 1; i <= days; i++) {
-					galaxy.simuletedOneDay();
-					WeatherPredictionResult resultTemp = weatherService.getPredictionResult(galaxy);
-					resultTemp.getDaysOfMaxPerimeter().add(i);
-					result.addResult(resultTemp);
-					if(save){
-						WeatherCondition condition = new WeatherCondition(new Long(resultTemp.getDaysOfMaxPerimeter().get(0)), WeatherCondition.getWeatherConditionDesc(resultTemp));
-						weatherConditionRepository.save(condition);
-					}
-					System.out.println(resultTemp.toString());
+				solarSystem.simuletedOneDay();
+				WeatherPredictionResult resultTemp = weatherService.getPredictionResult(solarSystem.getPlanets());
+				resultTemp.getDaysOfMaxPerimeter().add(i);
+				result.addResult(resultTemp);
+				System.out.println(resultTemp.toString());
 			}
 			return result;
 		} catch (Exception e) {
@@ -59,6 +57,23 @@ public class GalaxyServiceImpl implements GalaxyService{
 			}
 		}
 
+	@Override
+	public List<WeatherCondition> simulatedWeatherConditionForTheNextTenYears(SolarSystem solarSystem) {
+		List<WeatherCondition> weatherConditions = new ArrayList<WeatherCondition>();
+		try {
+			for(int i = 1; i <= TEN_YEARS_DAYS; i++) {
+				solarSystem.simuletedOneDay();
+				WeatherCondition condition = weatherService.getWeatherPrediction(solarSystem.getPlanets());
+				condition.setDay(new Long(i));
+				weatherConditions.add(condition);
+			}
+			return weatherConditions;
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+		return null;
+	}
+	
 	private Long getEquivalentDay(Long dayNumber) {
 		while(dayNumber>TEN_YEARS_DAYS) {
 			dayNumber -= REPEAT_PATTERN; 

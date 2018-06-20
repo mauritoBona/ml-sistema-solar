@@ -1,4 +1,4 @@
-package com.ml.wp.repositorys;
+package com.ml.wp.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

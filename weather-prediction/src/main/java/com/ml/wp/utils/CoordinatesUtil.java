@@ -4,6 +4,16 @@ import com.ml.wp.model.Coordinates;
 
 public abstract class CoordinatesUtil {
 
+	/**
+	 * this method checks that the three coordinates are aligned, 
+	 * checking that the difference between the ranges of 
+	 * the coordinates1-2 and coordinates2-3 are equal
+	 *
+	 * @param c1 first coordinates
+	 * @param c2 second coordinates
+	 * @param c3 thirst coordinates
+	 * @return true if the three coordinates are aligned - ((x2-x1)*(y3-y2))-((y2-y1)*(x3-x2)) == 0
+	 */
 	public static boolean areAligned(Coordinates c1, Coordinates c2, Coordinates c3) {
 		double x1 = c1.getX();
 		double y1 = c1.getY();
@@ -14,10 +24,32 @@ public abstract class CoordinatesUtil {
 		return (((x2-x1)*(y3-y2))-((y2-y1)*(x3-x2))) == 0.00;
 	}
 	
-	public static boolean isCoordinateInsideTriangle(Coordinates t1, Coordinates t2, Coordinates t3, Coordinates x){
-		return isInside(t1.getX(), t1.getY(), t2.getX(), t2.getY(), t3.getX(), t3.getY(), x.getX(), x.getY());
+	/**
+	 * this method checks if a point (coordinate)
+	 * is inside of the triangle, this have the Area of the triangle
+	 * and the point form three triangles with the other coordinate, and get this three area
+	 * and if the sum of this is equals to the triangle area, the point is inside
+	 *
+	 * @param c1 coordinate of the triangle
+	 * @param c2 coordinate of the triangle
+	 * @param c3 coordinate of the triangle
+	 * @param x check if this coordinate is inside in the triangle
+	 * @return true if the coordinate X is inside of the triangle
+	 */
+	public static boolean isCoordinateInsideTriangle(Coordinates c1, Coordinates c2, Coordinates c3, Coordinates x){
+		return isInside(c1.getX(), c1.getY(), c2.getX(), c2.getY(), c3.getX(), c3.getY(), x.getX(), x.getY());
 	}
 	
+	/**
+	 * this method calculate the perimeter of the triangle -
+	 * calculate the distance between the coordinates c1-c2 / c1-c3 / c2-c3
+	 * and sum the three distances
+	 *
+	 * @param c1 coordinate
+	 * @param c2 coordinate
+	 * @param c3 coordinate
+	 * @return the value of the perimeter
+	 */
 	public static Double getTrianglePerimeter(Coordinates c1, Coordinates c2, Coordinates c3) {
 		Double c1c2 = getDistanceBetweenTwoCoordinates(c1, c2);
 		Double c1c3 = getDistanceBetweenTwoCoordinates(c1, c3);

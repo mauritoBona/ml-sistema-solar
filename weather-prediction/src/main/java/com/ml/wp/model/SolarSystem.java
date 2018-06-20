@@ -2,16 +2,16 @@ package com.ml.wp.model;
 
 import java.util.List;
 
-public class Galaxy {
+public class SolarSystem {
 
 	private Long id;
 	private List<Planet> planets;
 	
-	public Galaxy() {
+	public SolarSystem() {
 		super();
 	}
 	
-	public Galaxy(Long id, List<Planet> planets) {
+	public SolarSystem(Long id, List<Planet> planets) {
 		super();
 		this.id = id;
 		this.planets = planets;

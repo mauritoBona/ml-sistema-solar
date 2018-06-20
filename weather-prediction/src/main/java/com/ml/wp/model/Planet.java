@@ -27,10 +27,10 @@ public class Planet {
 		if (newAngle<0 && newAngle<=-TWO_PI) newAngle+=TWO_PI;
 		Double newPositionX = RoundUtil.getDoubleWith3Decimals(this.getRadious() * Math.cos(Math.toRadians(newAngle)));
 		Double newPositionY = RoundUtil.getDoubleWith3Decimals(this.getRadious() * Math.sin(Math.toRadians(newAngle)));
-		this.updateDynamicParameters(newAngle, newPositionX, newPositionY);
+		this.updateAngleAndCoordinates(newAngle, newPositionX, newPositionY);
 	}
 	
-	private void updateDynamicParameters(Double angle, Double positionX, Double positionY) {
+	private void updateAngleAndCoordinates(Double angle, Double positionX, Double positionY) {
 		this.setAngle(angle);
 		this.coordinates.setX(positionX);
 		this.coordinates.setY(positionY);
