@@ -21,6 +21,6 @@
 	
 	<bean id="runScheduler" class="com.ml.wp.utils.RunScheduler"/>  
 	<task:scheduled-tasks>
-		<task:scheduled ref="runScheduler" method="runWeatherconditionJob" cron="0 0 12 1 7 ? *"/>
+		<task:scheduled ref="runScheduler" method="runWeatherconditionJob" cron="0 0 12 ? 7/1 * 2018/10"/>
 	</task:scheduled-tasks>
 </beans>
