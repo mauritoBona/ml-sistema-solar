@@ -14,10 +14,16 @@ public class WeatherPredictionReader implements ItemReader<SolarSystem>{
 	@Autowired
 	private SolarSystem solarSystem;
 
+	private int runTimes = 0;
+	
 	@Override
 	public SolarSystem read()
 			throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-		return solarSystem;
+		if(runTimes == 0) {
+			runTimes++;
+			return solarSystem;
+		} 
+		return null;
 	}
 	
 }

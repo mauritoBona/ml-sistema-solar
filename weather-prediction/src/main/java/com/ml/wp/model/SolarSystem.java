@@ -38,4 +38,10 @@ public class SolarSystem {
 	public void setPlanets(List<Planet> planets) {
 		this.planets = planets;
 	}
+
+	public void resetCoordinatesOfPlanets() {
+		for(Planet planet : planets) {
+			planet.putOnInitialCoordinates();
+		}
+	}
 }

@@ -38,8 +38,10 @@ public class SolarSystemServiceImpl implements SolarSystemService{
 				WeatherPredictionResult resultTemp = weatherService.getPredictionResult(solarSystem.getPlanets());
 				resultTemp.getDaysOfMaxPerimeter().add(i);
 				result.addResult(resultTemp);
-				System.out.println(resultTemp.toString());
+				LOGGER.log(Level.INFO, resultTemp.toString());
 			}
+			System.out.println("===RESULTADO TOTAL PARA LOS 10 ANOS===");
+			LOGGER.log(Level.INFO, result.toString());
 			return result;
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
@@ -60,6 +62,7 @@ public class SolarSystemServiceImpl implements SolarSystemService{
 	@Override
 	public List<WeatherCondition> simulatedWeatherConditionForTheNextTenYears(SolarSystem solarSystem) {
 		List<WeatherCondition> weatherConditions = new ArrayList<WeatherCondition>();
+		solarSystem.resetCoordinatesOfPlanets();
 		try {
 			for(int i = 1; i <= TEN_YEARS_DAYS; i++) {
 				solarSystem.simuletedOneDay();

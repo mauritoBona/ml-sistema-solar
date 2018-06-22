@@ -11,6 +11,7 @@ public class Planet {
 	private Double angularSpeed;
 	private Coordinates coordinates;
 	private Double angle;
+	private Coordinates initialCoordinates;
 	
 	public Planet(String civilization, Double radious, Double angularSpeed, Double angle, Double positionX, Double positionY) {
 		super();
@@ -18,6 +19,7 @@ public class Planet {
 		this.radious = radious;
 		this.angularSpeed = angularSpeed;
 		this.coordinates = new Coordinates(positionX, positionY);
+		this.initialCoordinates = new Coordinates(positionX, positionY);
 		this.angle = angle;
 	}
 
@@ -82,5 +84,10 @@ public class Planet {
 	
 	public Double getPositionY() {
 		return this.coordinates.getY();
+	}
+
+	public void putOnInitialCoordinates() {
+		setCoordinates(initialCoordinates);
+		setAngle(0.0);
 	}
 }

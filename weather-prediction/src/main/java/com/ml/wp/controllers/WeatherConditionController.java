@@ -17,7 +17,7 @@ public class WeatherConditionController {
 	@Autowired
 	private SolarSystemService solarSystemService;
 	
-	 @RequestMapping(path= CLIMA_URL, method= RequestMethod.GET)
+	@RequestMapping(path= CLIMA_URL, method= RequestMethod.GET)
 	public WeatherCondition getWeatherCondition(@RequestParam(value = "dia") Long dayNumber) throws Exception{
 		 if (dayNumber != null) return solarSystemService.getWeatherConditionByDay(dayNumber);
 			else { throw new Exception("El dia ingresado no puede ser nulo o vacio"); }

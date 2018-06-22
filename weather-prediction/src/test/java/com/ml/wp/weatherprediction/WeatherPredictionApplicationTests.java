@@ -19,7 +19,6 @@ import com.ml.wp.controllers.WeatherConditionController;
 import com.ml.wp.model.Coordinates;
 import com.ml.wp.model.SolarSystem;
 import com.ml.wp.model.WeatherCondition;
-import com.ml.wp.model.WeatherPredictionResult;
 import com.ml.wp.services.SolarSystemService;
 import com.ml.wp.utils.CoordinatesUtil;
 
@@ -106,23 +105,27 @@ public class WeatherPredictionApplicationTests {
 	
 	@Test
 	public void calculateWeatherPredictionIn10YearsAndNotSave() throws Exception {
-		WeatherPredictionResult pr = solarSystemService.simulateWeatherConditionsInYears(solarSystem, 10);
-		System.out.println("===resultado total 10 anos===");
-		System.out.println(pr.toString());
+		solarSystemService.simulateWeatherConditionsInYears(solarSystem, 10);
 	}
 
-//	@Test
-//	public void getWeatherConditionDateRestTest() {
-//		WeatherCondition wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=830", WeatherCondition.class);
-//		assertTrue(wcd.getDescription().contains("Periodo de lluvias"));
-//		
-//		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=1170", WeatherCondition.class);
-//		assertTrue(wcd.getDescription().contains("Periodo de sequias"));
-//		
-//		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=3750", WeatherCondition.class);
-//		assertTrue(wcd.getDescription().contains("Periodo de lluvias"));
-//		
-//		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=3690", WeatherCondition.class);
-//		assertTrue(wcd.getDescription().contains("Periodo de sequias"));
-//	}
+	@Test
+	public void getWeatherConditionDateRestTest() {
+		WeatherCondition wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=830", WeatherCondition.class);
+		assertTrue(wcd.getDescription().contains("PERIODO DE LLUVIAS"));
+		
+		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=1170", WeatherCondition.class);
+		assertTrue(wcd.getDescription().contains("PERIODO DE SEQUIAS"));
+		
+		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=85", WeatherCondition.class);
+		assertTrue(wcd.getDescription().contains("PERIODO DE CONDICIONES NORMALES"));
+		
+		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=615", WeatherCondition.class);
+		assertFalse(wcd.getDescription().contains("PERIODO DE CONDICIONES OPTIMAS DE PRESION Y TEMPERATURA"));
+		
+		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=3750", WeatherCondition.class);
+		assertTrue(wcd.getDescription().contains("PERIODO DE LLUVIAS"));
+		
+		wcd = this.restTemplate.getForObject("http://localhost:" + port + wcController.CLIMA_URL + "?dia=3690", WeatherCondition.class);
+		assertTrue(wcd.getDescription().contains("PERIODO DE SEQUIAS"));
+	}
 }

@@ -9,6 +9,8 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ml.wp.repositories.WeatherConditionRepository;
+
 @Component
 public class RunScheduler {
 
@@ -20,10 +22,17 @@ public class RunScheduler {
 	@Autowired
 	private Job simulateWeatherConditionsJob;
 	
+	@Autowired
+	private WeatherConditionRepository weatherConditionRepository;
+	
 	public void runWeatherconditionJob() {
 		try {
-			JobParameters param = new JobParameters();		
-			jobLauncher.run(simulateWeatherConditionsJob, param);
+			long countTable = weatherConditionRepository.count();
+			System.out.println(countTable);
+			if (countTable == 0) {
+				JobParameters param = new JobParameters();	
+				jobLauncher.run(simulateWeatherConditionsJob, param);
+			}
 	    } catch (Exception e) {
 	    	logger.log(Level.SEVERE, e.getMessage());
 	    }

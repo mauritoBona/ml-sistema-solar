@@ -48,7 +48,7 @@ public class BatchConfiguration {
     @Bean
     protected Step simulateWeatherConditionsStep(ItemReader<SolarSystem> reader,
       ItemProcessor<SolarSystem, List<WeatherCondition>> processor, ItemWriter<List<WeatherCondition>> writer) {
-        return steps.get("simulateWeatherConditionStep").<SolarSystem, List<WeatherCondition>>chunk(10)
+        return steps.get("simulateWeatherConditionStep").<SolarSystem, List<WeatherCondition>>chunk(100)
           .reader(reader)
           .processor(processor)
           .writer(writer)

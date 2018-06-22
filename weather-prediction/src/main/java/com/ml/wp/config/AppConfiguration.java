@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.ml.wp.model.SolarSystem;
 import com.ml.wp.model.Planet;
+import com.ml.wp.model.SolarSystem;
 
 @Configuration
 @ComponentScan("com.ml.wp")
-public class AppConfiguration {
+public class AppConfiguration{
 
 	@Bean("solarSystem")
 	public SolarSystem solarSystem() {
