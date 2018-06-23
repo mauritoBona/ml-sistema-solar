@@ -33,10 +33,10 @@ public class SolarSystemServiceImpl implements SolarSystemService{
 		WeatherPredictionResult result = new WeatherPredictionResult();
 		Integer days = years * 365;
 		try {
-			for(int i = 1; i <= days; i++) {
+			for(int day = 1; day <= days; day++) {
 				solarSystem.simuletedOneDay();
 				WeatherPredictionResult resultTemp = weatherService.getPredictionResult(solarSystem.getPlanets());
-				resultTemp.getDaysOfMaxPerimeter().add(i);
+				resultTemp.getDaysOfMaxPerimeter().add(day);
 				result.addResult(resultTemp);
 				LOGGER.log(Level.INFO, resultTemp.toString());
 			}
@@ -64,10 +64,10 @@ public class SolarSystemServiceImpl implements SolarSystemService{
 		List<WeatherCondition> weatherConditions = new ArrayList<WeatherCondition>();
 		solarSystem.resetCoordinatesOfPlanets();
 		try {
-			for(int i = 1; i <= TEN_YEARS_DAYS; i++) {
+			for(int day = 1; day <= TEN_YEARS_DAYS; day++) {
 				solarSystem.simuletedOneDay();
 				WeatherCondition condition = weatherService.getWeatherPrediction(solarSystem.getPlanets());
-				condition.setDay(new Long(i));
+				condition.setDay(new Long(day));
 				weatherConditions.add(condition);
 			}
 			return weatherConditions;
