@@ -7,7 +7,7 @@ Java 8 -- Spring 5.0.0 -- Spring Boot 2.0.2 -- JPA -- Spring Batch -- Mysql 8.0 
 Poder predecir en los próximos 10 años las diferentes condiciones climáticas que se pueden dar en los 3 plantes del sistema solar.
 
 ## Solución: 
-Sabiendo que lo 3 planetas, siempre se van a encontrar alineados o formando un triángulo, si no están alineados forman un triángulo y viceversa, y teniendo la velocidad angular y sentido para el que se mueven. Se utiliza la clase abstracta CoordinatesUtil, para saber cuándo lo están.
+Sabiendo que los 3 planetas, siempre se van a encontrar alineados o formando un triángulo. El problema nos brinda la velocidad angular y el sentido de movimiento(Horario y AntiHorario) de cada planeta, se utilizan estos 2 datos para poder saber la ubicación de los planetas en cada día, y poder verificar las diferentes condiciones que tienen que cumplirse para que haya un periodo de Lluvia o Sequia o Condiciones Óptimas, para esto se utiliza la clase abstracta CoordinatesUtil, donde:
 
 	- Se sabe que los 3 planetas están alineados cuando Los puntos A(x1,y1), B(x2,y2) y C(x3,y3) se consideran alineados si los vectores AB y AC tienen la misma dirección, por lo que se debe dar ((x2-x1)(y3-y2))-((y2-y1)(x3-x2)) = 0.
 	- Si los planetas forman un triángulo, se necesita saber si el Sol esta adentro del mismo, para eso basta con sumar las distintas áreas de las todas combinaciones de los puntos y la del sol para ver si la suma de las áreas obtenidas es igual al área de los 3 puntos originales. Si esta suma es mayor, significa que el sol se encuentra fuera del triángulo. 
